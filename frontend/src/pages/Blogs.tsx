@@ -4,7 +4,7 @@ import { useBlogs } from "../hooks";
 
  
 
-const Blogs = () => {
+export const Blogs = () => {
     // you cant fetch the blogs from the backend because the backend is not implemented yet
     // so for now we will just render some dummy blogs
     // later we will fetch the blogs from the backend and render them here
@@ -46,4 +46,4 @@ const Blogs = () => {
   )
 }
 
-export default Blogs
+ 
