@@ -1,6 +1,6 @@
 import type{ SignupInput } from "@grptl/median-common";
 import axios from "axios";
-import { useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {BACKEND_URL} from "../../config"
 
@@ -10,26 +10,36 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     username: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  async function sendRequest(){
+  async function sendRequest(e?: FormEvent){
+    e?.preventDefault();
+    setLoading(true);
     try{
-       const response =  await axios.post(`${BACKEND_URL}/api/v1/user/${type==="signup"?"signup":"signin "}`, postInputs);
+         const  trimmedUsername = postInputs.username.toString().trim();
+      
+           const payload: SignupInput = {
+        ...postInputs,
+        username: trimmedUsername,
+      };
+       const response =  await axios.post(`${BACKEND_URL}/api/v1/user/${type==="signup"?"signup":"signin"}`, payload);
        console.log(response);
        let jwt = null;
        if(type === "signup"){
             jwt = response.data.token;
        }else{
             jwt = response.data.jwt;
-            console.log(jwt);
        }
+       setLoading(false)
        localStorage.setItem("token",jwt);
        navigate('/blogs')
     }catch(e){
        /// alret the user that the request failed
        console.log(e);
        alert("Error while signing up")
+       setLoading(false)
     }
 
   }
@@ -81,7 +91,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
             }}
             type="password"
           />
-          <button onClick={sendRequest} type="button" className=" w-full mt-8 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">{type=== "signup"?"Sign in":"Sign up"}</button>
+          <button onClick={sendRequest} type="button" className=" w-full mt-8 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">{loading?"please wait ...":type === "signup" ? "Sign Up" : "Sign In"}</button>
 
          </div>
           
