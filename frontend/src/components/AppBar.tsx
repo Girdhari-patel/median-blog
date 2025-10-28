@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { Avator } from "./BlogCard";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { BACKEND_URL } from "../../config";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// import { BACKEND_URL } from "../../config";
 // import Logo from './assets/medium-icon.svg';
 export const AppBar = () => {
      
