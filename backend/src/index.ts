@@ -19,13 +19,6 @@ app.route("/api/v1/user/", userRouter);
 app.route("/api/v1/blog/", blogRouter);
 
 
-app.get("/", async (c) => {
-  try {
-    console.log("Received POST request with data:");
-  } catch (error) {
-    console.error("Error parsing JSON:", error);
-  }
-  return c.json({ message: "Received POST request" });
-});
+ 
 
 export default app;
