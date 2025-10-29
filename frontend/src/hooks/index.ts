@@ -13,9 +13,9 @@ export interface Blog{
 }
 
 export interface User{
-    "id": string,
+ 
     "name": string,
-    "username": string
+  
 }
 export const useBlog = (id:string)=>{
     const [loading, setLoading] = useState(false);
