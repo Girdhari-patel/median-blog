@@ -1,4 +1,4 @@
-import React from "react";
+ 
 
 type SpinnerProps = {
   /** show as centered full-screen overlay */

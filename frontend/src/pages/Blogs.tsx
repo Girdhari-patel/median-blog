@@ -1,7 +1,7 @@
-import { AppBar } from "../components/AppBar"
+ 
 import BlogCard from "../components/BlogCard"
 import { Skeleton } from "../components/Sketeton";
-import Spinner from "../components/Spinner";
+ 
 import { useBlogs } from "../hooks";
 
  
@@ -17,10 +17,12 @@ export const Blogs = () => {
     // create our own custom hook called useBlogs to fetch the blogs from the backend
     const {loading, blogs} = useBlogs();
     if(loading){
-        return <div>
+        return <div className="flex justify-center flex-col">
+         <div className="flex justify-center">
+            <Skeleton/>
           <Skeleton/>
           <Skeleton/>
-          <Skeleton/>
+         </div>
         </div>
     }
   return (

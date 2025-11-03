@@ -1,4 +1,4 @@
-import { BrowserRouter, redirect, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Signup } from './pages/Signup'
 import { Signin } from './pages/Signin'
  
@@ -9,7 +9,7 @@ import {Blogs} from './pages/Blogs';
 import LandingPage from './pages/LandingPage'
 import { AppBar } from './components/AppBar'
 import Footer from './pages/Footer'
-import { useEffect } from 'react'
+ 
 function App() {
  
   return (
