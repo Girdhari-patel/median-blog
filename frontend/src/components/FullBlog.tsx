@@ -1,11 +1,9 @@
 import type { Blog } from "../hooks";
-import { AppBar } from "./AppBar";
 import { Avator } from "./BlogCard";
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
   return (
     <div>
-      <AppBar />
       <div className="flex justify-center  ">
         <div className="grid grid-cols-12 px-10 w-full pt-12 max-w-screen-xl">
           <div className="col-span-8  ">
