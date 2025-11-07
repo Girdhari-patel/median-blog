@@ -1,32 +1,35 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import { Signup } from './pages/Signup'
 import { Signin } from './pages/Signin'
- 
-
 import { Publish } from './pages/Publish'
 import Blog from './pages/Blog'
-import {Blogs} from './pages/Blogs';
+import { Blogs } from './pages/Blogs'
 import LandingPage from './pages/LandingPage'
 import { AppBar } from './components/AppBar'
 import Footer from './pages/Footer'
- 
+import { useUser } from './hooks'
+import Spinner from './components/Spinner'
+
 function App() {
- 
+  const { user, loading } = useUser();
+
+  if (loading) return <Spinner />
+
   return (
-    <>
-      <BrowserRouter>
+    <BrowserRouter>
       <AppBar />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/signup" element={<Signup />}  />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/blog/:id" element={<Blog />} />
-          <Route path='/blogs' element={<Blogs/>} />
-          <Route path='/publish' element={<Publish/>} />
-        </Routes>
-        <Footer/>
-      </BrowserRouter>
-    </>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+
+        {/* Protected routes: if no user, redirect to /signin */}
+        <Route path="/blog/:id" element={user ? <Blog /> : <Navigate to="/signin" replace />} />
+        <Route path="/blogs" element={user ? <Blogs /> : <Navigate to="/signin" replace />} />
+        <Route path="/publish" element={user ? <Publish /> : <Navigate to="/signin" replace />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   )
 }
 
