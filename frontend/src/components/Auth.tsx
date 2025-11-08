@@ -12,7 +12,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-const auth = useContext(AuthContext);
+   const auth = useContext(AuthContext)
   const navigate = useNavigate();
 
   async function sendRequest(e?: FormEvent){
@@ -35,8 +35,8 @@ const auth = useContext(AuthContext);
        }else{
             jwt = response.data.jwt;
        }
-      
-       const token = response?.data?.token ?? response?.data?.jwt ?? null;
+           console.log(jwt);
+           const token = jwt;
     if (!token) throw new Error("No token returned from server");
 
     // 1) Persist token (AuthProvider.login should also do this)
