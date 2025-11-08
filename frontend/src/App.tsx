@@ -1,4 +1,4 @@
- import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
+ import {  Route, Routes, Navigate, useNavigate } from 'react-router-dom'
 import { Signup } from './pages/Signup'
 import { Signin } from './pages/Signin'
 import { Publish } from './pages/Publish'
@@ -7,16 +7,30 @@ import { Blogs } from './pages/Blogs'
 import LandingPage from './pages/LandingPage'
 import { AppBar } from './components/AppBar'
 import Footer from './pages/Footer'
-import { useUser } from './hooks'
-import Spinner from './components/Spinner'
+
+import { useContext, useEffect } from 'react'
+import { AuthContext } from './context/AuthContext'
 
 function App() {
-  const { user, loading } = useUser();
+   
+  const auth = useContext(AuthContext);
+  const navigate= useNavigate();
 
-  if (loading) return <Spinner />
+ if (!auth) return null; // optional check
+
+   const { user} = auth;
+   
+
+  useEffect(() => {
+ 
+   navigate('/blogs')
+  },[user]);
+
+  
+  
 
   return (
-    <BrowserRouter>
+    < >
       <AppBar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -29,7 +43,7 @@ function App() {
         <Route path="/publish" element={user ? <Publish /> : <Navigate to="/signin" replace />} />
       </Routes>
       <Footer />
-    </BrowserRouter>
+    </>
   )
 }
 

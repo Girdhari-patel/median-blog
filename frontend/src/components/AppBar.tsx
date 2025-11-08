@@ -1,19 +1,25 @@
 import { Link } from "react-router-dom";
  
 import { MediumLogo } from "./icons/MediumLogo";
-import { useUser } from "../hooks";
+ 
 
 import Spinner from "./Spinner";
-import { useEffect } from "react";
+import { useContext } from "react";
 import UserMenu from "./UserMenu";
+import { AuthContext } from "../context/AuthContext";
+ 
+ 
  
 export const AppBar = () => {
-     
-    const {loading, user} = useUser(); 
+ 
+  const auth = useContext(AuthContext);
+   
 
-    useEffect(()=>{
-      console.log("User in AppBar:", user);
-    },[ ])
+ if (!auth) return null; // optional check
+
+  const { user, loading } = auth;
+    
+    
 
   return (
     <div className="border-b flex justify-between px-10 py-4">
@@ -33,7 +39,7 @@ export const AppBar = () => {
       {loading ? (
       <Spinner message="Loading..." size="sm" />
     ) : user ? (
-      <UserMenu user={String(user)} />
+      <UserMenu user={String(user.name)} />
     ) : (
       <SigninButton />
     )}

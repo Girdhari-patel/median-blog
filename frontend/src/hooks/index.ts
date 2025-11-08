@@ -71,29 +71,3 @@ export const useBlogs = ()=>{
     return {loading, blogs};
 }
 
-export const useUser = ()=>{
-     const [loading, setLoading] = useState(false);
-     const [user, setUser] = useState<User>();
-     useEffect(()=>{
-         const fetchUser = async()=>{
-             setLoading(true);
-             try{
-                 const response = await axios.get(`${BACKEND_URL}/api/v1/user/me`,{
-                     headers:{
-                         Authorization:localStorage.getItem("token")
-                     }
-                 });
-             
-                 console.log("Fetched user:", response.data.user);
-                 setUser(response.data.user.name || null);
-             
-             }catch(e){
-                 console.log("Error while fetching user", e);
-             }finally{
-                 setLoading(false);
-             }
-         }
-         fetchUser();
-     }, []);
-     return {loading, user};
-}

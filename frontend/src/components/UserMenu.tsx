@@ -1,14 +1,16 @@
  // components/UserMenu.tsx
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Avator } from "./BlogCard";
+import { AuthContext } from "../context/AuthContext";
 
 export default function UserMenu({ user }: { user: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-
+  const auth = useContext(AuthContext)!;
+  const { logout } = auth;
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    logout();
     navigate("/signin");
   };
 

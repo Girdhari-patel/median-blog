@@ -16,6 +16,7 @@ export const Blogs = () => {
     // store it in a context varible
     // create our own custom hook called useBlogs to fetch the blogs from the backend
     const {loading, blogs} = useBlogs();
+    console.log("in blogs", blogs)
     if(loading){
         return <div className="flex justify-center flex-col">
          <div className="flex justify-center">

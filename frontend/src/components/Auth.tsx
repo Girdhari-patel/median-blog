@@ -1,8 +1,9 @@
 import type{ SignupInput } from "@grptl/median-common";
 import axios from "axios";
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useContext, useState, type ChangeEvent, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {BACKEND_URL} from "../../config"
+import { AuthContext } from "../context/AuthContext";
 
 export const Auth = ({ type }: { type: "signup" | "signin" }) => {
   const [postInputs, setPostInputs] = useState<SignupInput>({
@@ -11,7 +12,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-
+const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
   async function sendRequest(e?: FormEvent){
@@ -26,15 +27,34 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
       };
        const response =  await axios.post(`${BACKEND_URL}/api/v1/user/${type==="signup"?"signup":"signin"}`, payload);
        console.log(response);
+       console.log("navigate to blogs")
+       console.log("navigate", typeof navigate)
        let jwt = null;
        if(type === "signup"){
             jwt = response.data.token;
        }else{
             jwt = response.data.jwt;
        }
+      
+       const token = response?.data?.token ?? response?.data?.jwt ?? null;
+    if (!token) throw new Error("No token returned from server");
+
+    // 1) Persist token (AuthProvider.login should also do this)
+    // 2) Update auth context so user becomes available synchronously/soon after
+    if (auth?.login) {
+      await auth.login(token); // important: wait for login to fetch user
+    } else {
+      // fallback: at least save token
+      localStorage.setItem("token", token);
+    }
+
+    console.log("token saved and auth updated:", auth?.user);
        setLoading(false)
-       localStorage.setItem("token",jwt);
-       navigate('/blogs')
+       
+    
+    // SPA-friendly redirect
+       navigate("/blogs");
+       console.log('navigated');
     }catch(e){
        /// alret the user that the request failed
        console.log(e);
