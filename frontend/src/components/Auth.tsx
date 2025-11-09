@@ -12,8 +12,8 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-   const auth = useContext(AuthContext)
-   const {user} = auth;
+  const auth = useContext(AuthContext)
+   const user = auth?.user;
   const navigate = useNavigate();
 
   async function sendRequest(e?: FormEvent){
