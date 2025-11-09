@@ -30,7 +30,7 @@ export const Blogs = () => {
     <div>
         {/* <AppBar/> */}
     <div className="flex justify-center">
-    <div className=""> 
+    <div className="cursor-pointer"> 
        {blogs.map(blog => <BlogCard
                     id={blog.id}
                     authorName={blog.author.name || " "}

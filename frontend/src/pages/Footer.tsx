@@ -5,7 +5,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t ">
+    <footer className="border-t mt-auto shadow-inner w-full  text-center py-4 text-gray-600">
       <div className="max-w-screen-xl mx-auto p-8 flex flex-col md:flex-row items-center md:justify-between gap-4">
         <div className="text-sm text-gray-600 text-center md:text-left">
           © {year} Girdhari Patel <span aria-hidden="true">❤️</span>

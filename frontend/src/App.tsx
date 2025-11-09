@@ -21,17 +21,21 @@ function App() {
    const { user} = auth;
    
 
-  useEffect(() => {
- 
-   navigate('/blogs')
-  },[user]);
+ //✅ Fix: only navigate when a user exists and you’re not already on /blogs.
 
+useEffect(() => {
+  if (user) {
+    navigate('/blogs');
+  }
+}, [user])
   
   
 
   return (
     < >
+    <div className='min-h-screen flex flex-col'>
       <AppBar />
+      <main className='flex-grow'>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
@@ -42,7 +46,9 @@ function App() {
         <Route path="/blogs" element={user ? <Blogs /> : <Navigate to="/signin" replace />} />
         <Route path="/publish" element={user ? <Publish /> : <Navigate to="/signin" replace />} />
       </Routes>
+      </main>
       <Footer />
+      </div>
     </>
   )
 }

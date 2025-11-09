@@ -58,8 +58,11 @@ export const useBlogs = ()=>{
                 });
             
                 console.log("Fetched blogs:", response.data);
+                let blogs = response.data.blogs;
+                blogs  = blogs.reverse();
+
             
-                setBlogs(response.data.blogs ||[]);
+                setBlogs(blogs ||[]);
             }catch(e){
                 console.log("Error while fetching blogs", e);
             }finally{
